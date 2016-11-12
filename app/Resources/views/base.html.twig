@@ -2,12 +2,104 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <title>{{ title|default('Accueil') }} | RecettesFaciles.fr</title>
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <style>
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                background: #000;
+                font-family: Georgia;
+                font-size: 14px;
+            }
+            h1, h2 {
+                margin-bottom: 20px;
+            }
+            p {
+                margin: 10px;
+            }
+            .container {
+                width: 1000px;
+                margin: auto;
+                background: #fff;
+                display: flex;
+                flex-direction: column;
+            }
+            .header {
+                padding: 15px;
+                color: #fff;
+                text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+                background: #b2cddd;
+            }
+            .header small {
+                font-size: 0.55em;
+                float: right;
+                color: rgba(0,0,0,0.8);
+                text-shadow: 2px 2px 1px rgba(255,255,255,0.7);
+            }
+            header h1 {
+                text-align: center;
+            }
+            .content {
+                display: flex;
+            }
+            .page {
+                padding: 15px;
+                flex: 1;
+            }
+            .page h1 {
+                text-transform: uppercase;
+                border-bottom: 1px solid black;
+            }
+            .menu {
+                width: 250px;
+                background: #b2cddd;
+            }
+            .menu a {
+                color: black;
+            }
+            .menu li {
+                padding-left:25px;
+                list-style: none;
+            }
+            .menu li:before {
+                content: "» ";
+                color: red;
+                margin-right: 15px;
+            }
+            .menu li:hover:before {
+                color: green;
+            }
+            .footer {
+                background: #333;
+                color: #fff;
+                padding: 15px;
+            }
+        </style>
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+    <div class="container">
+        <header class="header">
+            <h1>
+                RecettesFaciles.fr <br><br>
+                <small>Le site pour trouver des recettes faciles</small>
+            </h1>
+        </header>
+        <section class="content">
+            <nav class="menu">
+                {{ knp_menu_render('AppBundle:Builder:mainMenu') }}
+            </nav>
+            <section class="page">
+                <h1>{{ title|default('Accueil') }}</h1>
+                {% block body %}{% endblock %}
+            </section>
+        </section>
+        <footer class="footer">
+            © {{ "now"|date('Y') }} | Tous droits réservés | RecettesFaciles.fr
+        </footer>
+    </div>
     </body>
 </html>
